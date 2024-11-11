@@ -9,7 +9,7 @@ using Number = double;
 double ReadNumber () {
     double num;
     std::cin >> num;
-    
+
     if (std::cin.fail()) {
         std::cerr << "Error: Numeric operand expected"s << std::endl;
     }
@@ -17,9 +17,9 @@ double ReadNumber () {
     return num;
 }
 
-double ReadNumber (Number& result) {
+double ReadNumber (Number& result, const bool& use_memory) {
     
-    if (result == -0.0000000000001) {
+    if (!use_memory) {
         std::cerr << "Error: Memory is empty" << std::endl;
     }
 
@@ -27,11 +27,12 @@ double ReadNumber (Number& result) {
 }
 
 void RunCalculatorCycle () {
+    bool use_memory = false;
     double number = ReadNumber();
-    double number_memory = -0.0000000000001;
-    
+    double number_memory;
+
     std::string token;
-    
+
     while(std::cin >> token) {
         if (token == "+"s) {
             number += ReadNumber();
@@ -53,8 +54,9 @@ void RunCalculatorCycle () {
             break;
         } else if (token == "s"s) {
             number_memory = number;
+            use_memory = true;
         } else if (token == "l"s) {
-            number = ReadNumber(number_memory);
+            number = ReadNumber(number_memory, use_memory);
         } else {
             std::cerr << "Error: Unknown token "s << token << std::endl;
             break;
