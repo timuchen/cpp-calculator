@@ -1,65 +1,41 @@
-#include <iostream>
-#include <string>
-#include <cmath>
 #include "calculator.h"
 
-using namespace std::literals;
-using Number = double;
+#include <iostream>
+#include <cmath>
 
-double ReadNumber () {
-    double num;
-    std::cin >> num;
+using namespace std;
 
-    if (std::cin.fail()) {
-        std::cerr << "Error: Numeric operand expected"s << std::endl;
-    }
-
-    return num;
-}
-
-double ReadNumber (Number& result, const bool& use_memory) {
-    
-    if (!use_memory) {
-        std::cerr << "Error: Memory is empty" << std::endl;
-    }
-
-    return result;
-}
-
-void RunCalculatorCycle () {
-    bool use_memory = false;
-    double number = ReadNumber();
-    double number_memory;
-
-    std::string token;
-
-    while(std::cin >> token) {
-        if (token == "+"s) {
-            number += ReadNumber();
-        } else if (token == "-"s) {
-            number -= ReadNumber();
-        } else if (token == "*"s) {
-            number *= ReadNumber();
-        } else if (token == "/"s) {
-            number /= ReadNumber();
-        } else if (token == "**"s) {
-            number = std::pow(number, ReadNumber());
-        } else if (token == "="s) {
-            std::cout << number << std::endl;
-        } else if (token == "c"s) {
-            number = 0;
-        } else if (token == ":"s) {
-            number = ReadNumber();
-        } else if (token == "q"s) {
-            break;
-        } else if (token == "s"s) {
-            number_memory = number;
-            use_memory = true;
-        } else if (token == "l"s) {
-            number = ReadNumber(number_memory, use_memory);
-        } else {
-            std::cerr << "Error: Unknown token "s << token << std::endl;
-            break;
-        }
-    }
-}
+void Calculator::Set(Number n) {
+    init_number_ = n;
+};
+Number Calculator::GetNumber() const {
+    return init_number_;
+};
+void Calculator::Add(Number n) {
+    init_number_ += n;
+};
+void Calculator::Sub(Number n) {
+    init_number_ -= n;
+};
+void Calculator::Div(Number n) {
+    init_number_ /= n;
+};
+void Calculator::Mul(Number n) {
+    init_number_ *= n;
+};
+void Calculator::Pow(Number n) {
+    init_number_ = pow(init_number_, n);
+};
+void Calculator::Save() {
+    memory_ = init_number_;
+    has_mem_ = true;
+};
+void Calculator::Load() {
+    init_number_ = memory_;
+};
+bool Calculator::HasMem() const {
+    return has_mem_;
+};
+std::string Calculator::GetNumberRepr() const {
+    return std::to_string(init_number_);
+};
