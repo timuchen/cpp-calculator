@@ -1,14 +1,11 @@
-#include <cassert>
-#include <cstdlib>
+#include "mainwindow.h"
 
-#include "calculator_ui.h"
+#include <QApplication>
 
-int main() {
-    Calculator calc;
-    CalculatorUI ui{calc, std::cout, std::cerr};
-    if (ui.Parse(std::cin)) {
-        return EXIT_SUCCESS;
-    } else {
-        return EXIT_FAILURE;
-    }
+int main(int argc, char *argv[])
+{
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    return a.exec();
 }

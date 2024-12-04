@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include <QString>
 
 using Number = double;
 
@@ -16,7 +16,7 @@ public:
     void Save();
     void Load();
     bool HasMem() const;
-    std::string GetNumberRepr() const;
+    QString GetNumberRepr() const;
 private:
     bool has_mem_ = false;
     Number memory_;
