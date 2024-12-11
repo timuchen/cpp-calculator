@@ -18,6 +18,10 @@ MainWindow::~MainWindow() {
 
 void MainWindow::SetActiveNumber()
 {
+    if (current_operation_ == NO_OPERATION) {
+        ui->l_formula->clear();
+    }
+
     active_number_ = input_number_.toDouble();
 
     if (active_number_ == 0) {
@@ -162,7 +166,13 @@ void MainWindow::on_pb_c_clicked()
 void MainWindow::on_pb_double_clicked()
 {
     input_number_ += QString(".");
-    SetActiveNumber();
+    active_number_ = input_number_.toDouble();
+
+    if (active_number_ == 0) {
+        input_number_ = 0;
+    }
+
+    ui->l_result->setText(QString::number(active_number_));
 }
 
 void MainWindow::on_pb_clear_clicked()
