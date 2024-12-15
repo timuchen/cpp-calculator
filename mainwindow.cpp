@@ -29,7 +29,7 @@ void MainWindow::SetActiveNumber()
         return;
     }
 
-    ui->l_result->setText(QString::number(active_number_));
+    ui->l_result->setText(input_number_);
 }
 
 void MainWindow::SetOperation(const ActiveOperation& operation)
