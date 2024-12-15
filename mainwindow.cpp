@@ -24,8 +24,9 @@ void MainWindow::SetActiveNumber()
 
     active_number_ = input_number_.toDouble();
 
-    if (active_number_ == 0) {
-        input_number_ = 0;
+    if(input_number_.isEmpty()){
+        ui->l_result->setText("0");
+        return;
     }
 
     ui->l_result->setText(QString::number(active_number_));
@@ -165,14 +166,15 @@ void MainWindow::on_pb_c_clicked()
 
 void MainWindow::on_pb_double_clicked()
 {
-    input_number_ += QString(".");
-    active_number_ = input_number_.toDouble();
+    if (input_number_.indexOf('.') <= 0) {
 
-    if (active_number_ == 0) {
-        input_number_ = 0;
+        if (active_number_ == 0) {
+            input_number_ += QString("0");
+        }
+
+        input_number_ += QString(".");
+        ui->l_result->setText(input_number_);
     }
-
-    ui->l_result->setText(QString::number(active_number_));
 }
 
 void MainWindow::on_pb_clear_clicked()
