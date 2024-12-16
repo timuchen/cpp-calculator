@@ -205,7 +205,7 @@ void MainWindow::on_pb_clear_clicked()
         return;
     }
 
-    if (input_number_.indexOf('i') > 0 || input_number_.indexOf('e') > 0) {
+    if (input_number_.indexOf('i') >= 0 || input_number_.indexOf('e') >= 0) {
         return;
     }
 
