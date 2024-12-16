@@ -184,7 +184,15 @@ void MainWindow::on_pb_c_clicked()
 
 void MainWindow::on_pb_double_clicked()
 {
-    if (memory_active_ || result_show_) {
+    if (memory_active_) {
+        return;
+    }
+
+    if (result_show_) {
+        input_number_ = QString("0");
+        SetActiveNumber();
+        input_number_ += QString(".");
+        ui->l_result->setText(input_number_);
         return;
     }
 
