@@ -28,8 +28,9 @@ void MainWindow::SetActiveNumber()
 
     active_number_ = input_number_.toDouble();
 
-    input_number_ = QString::number(active_number_);
-
+    if (input_number_ == "" || (input_number_.startsWith('0') && input_number_.size() == 2)) {
+        input_number_ = QString::number(active_number_);
+    }
 
     ui->l_result->setText(input_number_);
     result_show_ = false;
