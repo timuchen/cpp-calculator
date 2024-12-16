@@ -277,7 +277,7 @@ void MainWindow::on_pb_equally_clicked()
                                .arg(GetOperationSymbol(current_operation_))
                                .arg(active_number_));
 
-    if(current_operation_ == DIVISION) {
+    if(current_operation_         == DIVISION) {
         calculator_.Div(active_number_);
     } else if (current_operation_ == MULTIPLICATION) {
         calculator_.Mul(active_number_);
