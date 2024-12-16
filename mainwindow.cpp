@@ -50,7 +50,7 @@ void MainWindow::SetOperation(const ActiveOperation& operation)
     ui->l_formula->setText(formated
                                .arg(QString::number(calculator_.GetNumber()))
                                .arg(GetOperationSymbol(operation)));
-    input_number_ = 0;
+    input_number_ = "0";
 }
 
 QString MainWindow::GetOperationSymbol(const ActiveOperation& operation)
@@ -104,16 +104,18 @@ void MainWindow::on_pb_mc_clicked()
 
 void MainWindow::on_pb_0_clicked()
 {
-    if(input_number_ == "0") {
+    if(input_number_.startsWith('0') && input_number_.size() == 1) {
+        input_number_ = QString("0");
+        SetActiveNumber();
         return;
     }
 
     input_number_ += QString("0");
 
-    if (input_number_.indexOf('.')) {
+    /*if (input_number_.indexOf('.')) {
         ui->l_result->setText(input_number_);
         return;
-    }
+    }*/
 
     SetActiveNumber();
 }
