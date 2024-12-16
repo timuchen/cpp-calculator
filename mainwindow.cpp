@@ -29,6 +29,11 @@ void MainWindow::SetActiveNumber()
     active_number_ = input_number_.toDouble();
 
     if (input_number_ == "" || (input_number_.startsWith('0') && input_number_.size() == 2)) {
+        if(input_number_.toStdString().find('.') != 1)
+        input_number_ = QString::number(active_number_);
+    }
+
+    if (input_number_.startsWith('-') && input_number_.size() < 2) {
         input_number_ = QString::number(active_number_);
     }
 
@@ -111,12 +116,6 @@ void MainWindow::on_pb_0_clicked()
     }
 
     input_number_ += QString("0");
-
-    /*if (input_number_.indexOf('.')) {
-        ui->l_result->setText(input_number_);
-        return;
-    }*/
-
     SetActiveNumber();
 }
 
