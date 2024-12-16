@@ -82,6 +82,8 @@ private:
     double active_number_ = 0;
     double memory_cell_;
     bool memory_saved_ = false;
+    bool memory_active_ = false;
+    bool result_show_ = false;
 
     void SetActiveNumber();
 

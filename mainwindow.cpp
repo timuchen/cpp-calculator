@@ -18,18 +18,21 @@ MainWindow::~MainWindow() {
 
 void MainWindow::SetActiveNumber()
 {
+    if (memory_active_) {
+        memory_active_ = false;
+    }
+
     if (current_operation_ == NO_OPERATION) {
         ui->l_formula->clear();
     }
 
     active_number_ = input_number_.toDouble();
 
-    if(input_number_.isEmpty()){
-        ui->l_result->setText("0");
-        return;
-    }
+    input_number_ = QString::number(active_number_);
+
 
     ui->l_result->setText(input_number_);
+    result_show_ = false;
 }
 
 void MainWindow::SetOperation(const ActiveOperation& operation)
@@ -38,13 +41,14 @@ void MainWindow::SetOperation(const ActiveOperation& operation)
         calculator_.Set(active_number_);
     }
 
+    memory_active_ = result_show_ = false;
+
     current_operation_ = operation;
 
     QString formated = "%1 %2";
     ui->l_formula->setText(formated
                                .arg(QString::number(calculator_.GetNumber()))
                                .arg(GetOperationSymbol(operation)));
-
     input_number_ = 0;
 }
 
@@ -84,20 +88,32 @@ void MainWindow::on_pb_mr_clicked()
 {
     if (memory_saved_) {
         active_number_ = memory_cell_;
-        ui->l_result->setText(QString::number(memory_cell_));
+        input_number_ = QString::number(memory_cell_);
+        ui->l_result->setText(input_number_);
+        memory_active_ = true;
     }
 }
 
 void MainWindow::on_pb_mc_clicked()
 {
     memory_cell_ = 0;
-    memory_saved_ = false;
+    memory_active_ = memory_saved_ = false;
     ui->l_memory->setText("");
 }
 
 void MainWindow::on_pb_0_clicked()
 {
+    if(input_number_ == "0") {
+        return;
+    }
+
     input_number_ += QString("0");
+
+    if (input_number_.indexOf('.')) {
+        ui->l_result->setText(input_number_);
+        return;
+    }
+
     SetActiveNumber();
 }
 
@@ -162,14 +178,19 @@ void MainWindow::on_pb_c_clicked()
     ui->l_formula->clear();
     calculator_.Set(0);
     current_operation_ = NO_OPERATION;
+    result_show_ = false;
 }
 
 void MainWindow::on_pb_double_clicked()
 {
+    if (memory_active_ || result_show_) {
+        return;
+    }
+
     if (input_number_.indexOf('.') <= 0) {
 
         if (active_number_ == 0) {
-            input_number_ += QString("0");
+            input_number_ = QString("0");
         }
 
         input_number_ += QString(".");
@@ -179,12 +200,20 @@ void MainWindow::on_pb_double_clicked()
 
 void MainWindow::on_pb_clear_clicked()
 {
+    if (memory_active_ || result_show_) {
+        return;
+    }
+
     input_number_.chop(1);
     SetActiveNumber();
 }
 
 void MainWindow::on_pb_sign_clicked()
 {
+    if (memory_active_ || result_show_) {
+        return;
+    }
+
     if (input_number_.startsWith('-')) {
         input_number_ = input_number_.mid(1);
     } else {
@@ -249,8 +278,9 @@ void MainWindow::on_pb_equally_clicked()
     }
 
     active_number_ = calculator_.GetNumber();
-    ui->l_result->setText(QString::number(active_number_));
-
+    calculator_.Set(0);
     current_operation_ = NO_OPERATION;
     input_number_ = "";
+    ui->l_result->setText(QString::number(active_number_));
+    result_show_ = true;
 }
