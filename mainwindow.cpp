@@ -48,7 +48,6 @@ void MainWindow::SetOperation(const ActiveOperation& operation)
     }
 
     memory_active_ = result_show_ = false;
-
     current_operation_ = operation;
 
     QString formated = "%1 %2";
@@ -207,8 +206,6 @@ void MainWindow::on_pb_clear_clicked()
     }
 
     if (input_number_.toStdString().find("inf") || input_number_.toStdString().find('e')) {
-        input_number_ = "";
-        SetActiveNumber();
         return;
     }
 
