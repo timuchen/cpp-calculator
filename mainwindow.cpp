@@ -205,7 +205,7 @@ void MainWindow::on_pb_clear_clicked()
         return;
     }
 
-    if (input_number_.toStdString().find("inf") || input_number_.toStdString().find('e')) {
+    if (input_number_.indexOf('i') > 0 || input_number_.indexOf('e') > 0) {
         return;
     }
 
@@ -217,6 +217,10 @@ void MainWindow::on_pb_sign_clicked()
 {
     if (memory_active_ || result_show_) {
         return;
+    }
+
+    if (input_number_ == "" || input_number_ == "0") {
+        input_number_ = QString::number(active_number_);
     }
 
     if (input_number_.startsWith('-')) {
