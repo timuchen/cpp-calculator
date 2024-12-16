@@ -206,6 +206,12 @@ void MainWindow::on_pb_clear_clicked()
         return;
     }
 
+    if (input_number_.toStdString().find("inf") || input_number_.toStdString().find('e')) {
+        input_number_ = "";
+        SetActiveNumber();
+        return;
+    }
+
     input_number_.chop(1);
     SetActiveNumber();
 }
@@ -230,18 +236,15 @@ void MainWindow::on_pb_division_clicked()
     SetOperation(DIVISION);
 }
 
-
 void MainWindow::on_pb_multiplication_clicked()
 {
     SetOperation(MULTIPLICATION);
 }
 
-
 void MainWindow::on_subtraction_clicked()
 {
     SetOperation(SUBTRACTION);
 }
-
 
 void MainWindow::on_pb_addition_clicked()
 {
