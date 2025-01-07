@@ -165,18 +165,21 @@ inline Rational operator*(const Rational& l, const Rational& r) {
 
     return Rational{a, b};
 }
+
 inline Rational operator/(const Rational& l, const Rational& r) {
     int a = l.GetNumerator() / r.GetDenominator();
     int b = l.GetDenominator() / r.GetNumerator();
 
     return Rational{a, b};
 }
+
 inline Rational operator+(const Rational& l, const Rational& r) {
     int a = l.GetNumerator() * r.GetDenominator() + l.GetDenominator() * r.GetNumerator();
     int b = l.GetDenominator() * r.GetDenominator();
 
     return Rational{a, b};
 }
+
 inline Rational operator-(const Rational& l, const Rational& r) {
     int a = l.GetNumerator() * r.GetDenominator() - l.GetDenominator() * r.GetNumerator();
     int b = l.GetDenominator() * r.GetDenominator();
