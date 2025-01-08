@@ -16,7 +16,6 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
-
 void MainWindow::SetInputText(const std::string& text) {
     ui->l_result->setStyleSheet("");
     ui->l_result->setText(QString::fromStdString(text));
@@ -64,7 +63,6 @@ void MainWindow::SetProcessControlKeyCallback(std::function<void(ControlKey key)
 void MainWindow::SetControllerCallback(std::function<void(ControllerType controller)> cb) {
     controller_cb_ = cb;
 }
-
 
 void MainWindow::on_pb_ms_clicked()
 {
@@ -143,7 +141,7 @@ void MainWindow::on_tb_extra_clicked()
 
 void MainWindow::on_pb_back_space_clicked()
 {
-    control_cb_(ControlKey::CLEAR);
+    control_cb_(ControlKey::BACKSPACE);
 }
 
 void MainWindow::on_pb_sign_clicked()

@@ -104,10 +104,12 @@ private:
             numerator_ = -numerator_;
             denominator_ = -denominator_;
         }
+
         const int divisor = std::gcd(numerator_, denominator_);
         numerator_ /= divisor;
         denominator_ /= divisor;
     }
+
     int numerator_ = 0;
     int denominator_ = 1;
 };
@@ -141,6 +143,7 @@ inline std::ostream& operator<<(std::ostream& os, Rational& num) {
         os << num.GetNumerator();
         return os;
     }
+
     os << num.GetNumerator() << " / " << num.GetDenominator();
     return os;
 }
@@ -165,18 +168,21 @@ inline Rational operator*(const Rational& l, const Rational& r) {
 
     return Rational{a, b};
 }
+
 inline Rational operator/(const Rational& l, const Rational& r) {
     int a = l.GetNumerator() / r.GetDenominator();
     int b = l.GetDenominator() / r.GetNumerator();
 
     return Rational{a, b};
 }
+
 inline Rational operator+(const Rational& l, const Rational& r) {
     int a = l.GetNumerator() * r.GetDenominator() + l.GetDenominator() * r.GetNumerator();
     int b = l.GetDenominator() * r.GetDenominator();
 
     return Rational{a, b};
 }
+
 inline Rational operator-(const Rational& l, const Rational& r) {
     int a = l.GetNumerator() * r.GetDenominator() - l.GetDenominator() * r.GetNumerator();
     int b = l.GetDenominator() * r.GetDenominator();
