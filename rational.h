@@ -30,9 +30,7 @@ public:
     };
 
     Rational Inv() const {
-        Rational other{denominator_, numerator_};
-
-        return other;
+        return Rational {denominator_, numerator_};;
     }
 
     int GetNumerator() const {
@@ -47,9 +45,9 @@ public:
     friend std::ostream& operator<< (std::ostream& os, const Rational& r);
 
     Rational& operator+ () {
-        Rational other{*this};
+        Rational result{*this};
 
-        return other;
+        return result;
     }
 
     Rational& operator- () {
@@ -94,7 +92,7 @@ public:
         return *this;
     }
 
-    explicit operator double() {
+    explicit operator double () {
         return numerator_ * 1.0 / denominator_;
     }
 
