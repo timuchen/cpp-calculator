@@ -53,6 +53,7 @@ public:
 
     std::optional<Error> Pow(T n) {
         if constexpr (std::is_same_v<T, Rational>) {
+
             if (n.GetNumerator() == 0 && result_.GetNumerator() == 0) {
                 return Error{"Zero power to zero"};
             } else if (n.GetDenominator() != 1) {
@@ -61,7 +62,9 @@ public:
                 result_ = ::Pow(result_, n);
                 return std::nullopt;
             }
+
         } else if constexpr (std::is_integral_v<T>) {
+
             if (n == 0 && result_ == 0) {
                 return Error{"Zero power to zero"};
             } else if (n < 0) {
@@ -70,9 +73,12 @@ public:
                 result_ = IntegerPow(result_, n);
                 return std::nullopt;
             }
+
         } else {
+
             result_ = std::pow(result_, n);
             return std::nullopt;
+
         }
     }
 

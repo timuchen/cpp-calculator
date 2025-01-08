@@ -141,7 +141,7 @@ void MainWindow::on_tb_extra_clicked()
 
 void MainWindow::on_pb_back_space_clicked()
 {
-    control_cb_(ControlKey::CLEAR);
+    control_cb_(ControlKey::BACKSPACE);
 }
 
 void MainWindow::on_pb_sign_clicked()
