@@ -43,16 +43,16 @@ public:
         return denominator_;
     }
 
-    friend std::istream& operator>>(std::istream& is, Rational& r);
-    friend std::ostream& operator<<(std::ostream& os, const Rational& r);
+    friend std::istream& operator>> (std::istream& is, Rational& r);
+    friend std::ostream& operator<< (std::ostream& os, const Rational& r);
 
-    Rational& operator+() {
+    Rational& operator+ () {
         Rational other{*this};
 
         return other;
     }
 
-    Rational& operator-() {
+    Rational& operator- () {
         numerator_ = (-numerator_);
         denominator_ = abs(denominator_);
         Reduction();
@@ -98,6 +98,30 @@ public:
         return numerator_ * 1.0 / denominator_;
     }
 
+    Rational operator* (const Rational& rhs) const {
+        Rational result(*this);
+        result *= rhs;
+        return result;
+    }
+
+    Rational operator/ (const Rational& rhs) const {
+        Rational result(*this);
+        result /= rhs;
+        return result;
+    }
+
+    Rational operator+ (const Rational& rhs) const {
+        Rational result(*this);
+        result += rhs;
+        return result;
+    }
+
+    Rational operator- (const Rational& rhs) const {
+        Rational result(*this);
+        result -= rhs;
+        return result;
+    }
+
 private:
     void Reduction() {
         if (denominator_ < 0) {
@@ -114,7 +138,7 @@ private:
     int denominator_ = 1;
 };
 
-inline std::istream& operator>>(std::istream& is, Rational& num){
+inline std::istream& operator>> (std::istream& is, Rational& num){
     int first, second;
     char div;
 
@@ -137,7 +161,7 @@ inline std::istream& operator>>(std::istream& is, Rational& num){
     return is;
 }
 
-inline std::ostream& operator<<(std::ostream& os, Rational& num) {
+inline std::ostream& operator<< (std::ostream& os, Rational& num) {
     if (os.fail() || num.GetDenominator() == 1) {
         os.clear();
         os << num.GetNumerator();
@@ -148,44 +172,16 @@ inline std::ostream& operator<<(std::ostream& os, Rational& num) {
     return os;
 }
 
-inline auto operator<=>(const Rational& l, const Rational& r) {
-    unsigned long a = static_cast<unsigned long>(l.GetNumerator()) * static_cast<unsigned long>(r.GetDenominator());
-    unsigned long b = static_cast<unsigned long>(l.GetDenominator()) * static_cast<unsigned long>(r.GetNumerator());
+inline auto operator<=> (const Rational& lhs, const Rational& rhs) {
+    unsigned long left_operand = static_cast<unsigned long>(lhs.GetNumerator()) * static_cast<unsigned long>(rhs.GetDenominator());
+    unsigned long right_operand = static_cast<unsigned long>(lhs.GetDenominator()) * static_cast<unsigned long>(rhs.GetNumerator());
 
-    return a <=> b;
+    return left_operand <=> right_operand;
 }
 
-inline bool operator==(const Rational& l, const Rational& r) {
-    unsigned long a = static_cast<unsigned long>(l.GetNumerator()) * static_cast<unsigned long>(r.GetDenominator());
-    unsigned long b = static_cast<unsigned long>(l.GetDenominator()) * static_cast<unsigned long>(r.GetNumerator());
+inline bool operator== (const Rational& lhs, const Rational& rhs) {
+    unsigned long left_operand = static_cast<unsigned long>(lhs.GetNumerator()) * static_cast<unsigned long>(rhs.GetDenominator());
+    unsigned long right_operand = static_cast<unsigned long>(lhs.GetDenominator()) * static_cast<unsigned long>(rhs.GetNumerator());
 
-    return a == b;
-}
-
-inline Rational operator*(const Rational& l, const Rational& r) {
-    int a = l.GetNumerator() * r.GetDenominator();
-    int b = l.GetDenominator() * r.GetNumerator();
-
-    return Rational{a, b};
-}
-
-inline Rational operator/(const Rational& l, const Rational& r) {
-    int a = l.GetNumerator() / r.GetDenominator();
-    int b = l.GetDenominator() / r.GetNumerator();
-
-    return Rational{a, b};
-}
-
-inline Rational operator+(const Rational& l, const Rational& r) {
-    int a = l.GetNumerator() * r.GetDenominator() + l.GetDenominator() * r.GetNumerator();
-    int b = l.GetDenominator() * r.GetDenominator();
-
-    return Rational{a, b};
-}
-
-inline Rational operator-(const Rational& l, const Rational& r) {
-    int a = l.GetNumerator() * r.GetDenominator() - l.GetDenominator() * r.GetNumerator();
-    int b = l.GetDenominator() * r.GetDenominator();
-
-    return Rational{a, b};
+    return left_operand == right_operand;
 }
