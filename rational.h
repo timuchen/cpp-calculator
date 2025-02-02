@@ -44,13 +44,13 @@ public:
     friend std::istream& operator>> (std::istream& is, Rational& r);
     friend std::ostream& operator<< (std::ostream& os, const Rational& r);
 
-    Rational& operator+ () {
+    Rational& operator+() {
         Rational result{*this};
 
         return result;
     }
 
-    Rational& operator- () {
+    Rational& operator-() {
         numerator_ = (-numerator_);
         denominator_ = abs(denominator_);
         Reduction();
@@ -58,9 +58,9 @@ public:
         return *this;
     }
 
-    Rational& operator= (const Rational& r) = default;
+    Rational& operator=(const Rational& r) = default;
 
-    Rational& operator+= (const Rational& n) {
+    Rational& operator+=(const Rational& n) {
         numerator_ = numerator_ * n.denominator_ + denominator_ * n.numerator_;
         denominator_ = denominator_ * n.denominator_;
         Reduction();
@@ -68,7 +68,7 @@ public:
         return *this;
     }
 
-    Rational& operator-= (Rational n) {
+    Rational& operator-=(Rational n) {
         numerator_ = numerator_ * n.denominator_ - denominator_ * n.numerator_;
         denominator_ = denominator_ * n.denominator_;
         Reduction();
@@ -76,7 +76,7 @@ public:
         return *this;
     }
 
-    Rational& operator*= (Rational n) {
+    Rational& operator*=(Rational n) {
         numerator_ *= n.numerator_;
         denominator_ *= n.denominator_;
         Reduction();
@@ -84,7 +84,7 @@ public:
         return *this;
     }
 
-    Rational& operator/= (Rational n) {
+    Rational& operator/=(Rational n) {
         numerator_ *= n.denominator_;
         denominator_ *= n.numerator_;
         Reduction();
@@ -92,29 +92,29 @@ public:
         return *this;
     }
 
-    explicit operator double () {
+    explicit operator double() {
         return numerator_ * 1.0 / denominator_;
     }
 
-    Rational operator* (const Rational& rhs) const {
+    Rational operator*(const Rational& rhs) const {
         Rational result(*this);
         result *= rhs;
         return result;
     }
 
-    Rational operator/ (const Rational& rhs) const {
+    Rational operator/(const Rational& rhs) const {
         Rational result(*this);
         result /= rhs;
         return result;
     }
 
-    Rational operator+ (const Rational& rhs) const {
+    Rational operator+(const Rational& rhs) const {
         Rational result(*this);
         result += rhs;
         return result;
     }
 
-    Rational operator- (const Rational& rhs) const {
+    Rational operator-(const Rational& rhs) const {
         Rational result(*this);
         result -= rhs;
         return result;
@@ -136,7 +136,7 @@ private:
     int denominator_ = 1;
 };
 
-inline std::istream& operator>> (std::istream& is, Rational& num){
+inline std::istream& operator>>(std::istream& is, Rational& num){
     int first, second;
     char div;
 
@@ -159,7 +159,7 @@ inline std::istream& operator>> (std::istream& is, Rational& num){
     return is;
 }
 
-inline std::ostream& operator<< (std::ostream& os, Rational& num) {
+inline std::ostream& operator<<(std::ostream& os, Rational& num) {
     if (os.fail() || num.GetDenominator() == 1) {
         os.clear();
         os << num.GetNumerator();
@@ -170,14 +170,14 @@ inline std::ostream& operator<< (std::ostream& os, Rational& num) {
     return os;
 }
 
-inline auto operator<=> (const Rational& lhs, const Rational& rhs) {
+inline auto operator<=>(const Rational& lhs, const Rational& rhs) {
     unsigned long left_operand = static_cast<unsigned long>(lhs.GetNumerator()) * static_cast<unsigned long>(rhs.GetDenominator());
     unsigned long right_operand = static_cast<unsigned long>(lhs.GetDenominator()) * static_cast<unsigned long>(rhs.GetNumerator());
 
     return left_operand <=> right_operand;
 }
 
-inline bool operator== (const Rational& lhs, const Rational& rhs) {
+inline bool operator==(const Rational& lhs, const Rational& rhs) {
     unsigned long left_operand = static_cast<unsigned long>(lhs.GetNumerator()) * static_cast<unsigned long>(rhs.GetDenominator());
     unsigned long right_operand = static_cast<unsigned long>(lhs.GetDenominator()) * static_cast<unsigned long>(rhs.GetNumerator());
 
